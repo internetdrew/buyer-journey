@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 
 function Welcome() {
   return (
-    <div className='mx-auto mt-32 max-w-2xl text-center sm:mt-40'>
+    <div className='mx-auto mt-32 max-w-2xl text-center sm:mt-40 md:mt-48'>
       <h1 className='text-2xl font-semibold'>
         Let&apos;s find what matters to you
       </h1>
