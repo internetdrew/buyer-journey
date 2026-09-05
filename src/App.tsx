@@ -76,6 +76,7 @@ function App() {
           <Interests
             interest={state.interest}
             onSelect={interest => send({ type: 'SELECT_INTEREST', interest })}
+            onContinue={() => send({ type: 'NEXT' })}
             onBack={() => send({ type: 'BACK' })}
           />
         );

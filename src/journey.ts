@@ -51,11 +51,13 @@ export function journeyReducer(
       if (event.type === 'NEXT') return { ...state, stage: 'interests' };
       return state;
     case 'interests':
+      if (event.type === 'NEXT' && state.interest === demoInterest) {
+        return { ...state, stage: 'focus' };
+      }
       if (event.type === 'BACK') return { ...state, stage: 'welcome' };
       if (event.type === 'SELECT_INTEREST' && event.interest === demoInterest) {
         return {
           ...state,
-          stage: 'focus',
           interest: event.interest,
           focusArea: null,
         };

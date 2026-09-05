@@ -6,15 +6,17 @@ type WelcomeProps = {
 
 function Welcome({ onStart }: WelcomeProps) {
   return (
-    <div className='mx-auto mt-32 max-w-2xl text-center sm:mt-40 md:mt-48'>
-      <h1 className='text-2xl font-semibold'>
-        Let&apos;s find what matters to you
+    <div className='mx-auto mt-32 max-w-2xl text-center text-pretty sm:mt-40 md:mt-48'>
+      <h1 className='text-xl font-semibold'>
+        Start with what you need to understand.
       </h1>
-      <p className='mx-auto mt-2 max-w-md text-neutral-500'>
-        A few quick questions will help us guide you through the parts of Base
-        Robotics most relevant to your operation.
+      <p className='mx-auto mt-2 text-neutral-500'>
+        Choose what matters most, and we'll guide you through how Base Robotics
+        could work in your operation.
       </p>
-      <Button className='my-6 min-w-24' onClick={onStart}>Start</Button>
+      <Button className='my-6 min-w-24' onClick={onStart}>
+        Explore
+      </Button>
       <div className='text-center space-x-1 text-neutral-500'>
         <svg
           xmlns='http://www.w3.org/2000/svg'
