@@ -2,16 +2,16 @@ import { Button } from '@/components/ui/button';
 
 function Welcome() {
   return (
-    <div className='mx-auto mt-40 max-w-2xl text-center'>
+    <div className='mx-auto mt-32 max-w-2xl text-center sm:mt-40'>
       <h1 className='text-2xl font-semibold'>
         Let&apos;s find what matters to you
       </h1>
-      <p className='mx-auto mt-2 max-w-5/6 text-neutral-600'>
+      <p className='mx-auto mt-2 max-w-md text-neutral-500'>
         A few quick questions will help us guide you through the parts of Forge
         Robotics most relevant to your operation.
       </p>
-      <Button className='mt-6'>Start</Button>
-      <div className='text-center space-x-1 mt-4 text-neutral-500'>
+      <Button className='my-6 min-w-24'>Start</Button>
+      <div className='text-center space-x-1 text-neutral-500'>
         <svg
           xmlns='http://www.w3.org/2000/svg'
           width='24'
