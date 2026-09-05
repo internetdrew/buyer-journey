@@ -1,16 +1,20 @@
 import { Button } from '@/components/ui/button';
 
-function Welcome() {
+type WelcomeProps = {
+  onStart: () => void;
+};
+
+function Welcome({ onStart }: WelcomeProps) {
   return (
     <div className='mx-auto mt-32 max-w-2xl text-center sm:mt-40 md:mt-48'>
       <h1 className='text-2xl font-semibold'>
         Let&apos;s find what matters to you
       </h1>
       <p className='mx-auto mt-2 max-w-md text-neutral-500'>
-        A few quick questions will help us guide you through the parts of Forge
+        A few quick questions will help us guide you through the parts of Base
         Robotics most relevant to your operation.
       </p>
-      <Button className='my-6 min-w-24'>Start</Button>
+      <Button className='my-6 min-w-24' onClick={onStart}>Start</Button>
       <div className='text-center space-x-1 text-neutral-500'>
         <svg
           xmlns='http://www.w3.org/2000/svg'
@@ -19,9 +23,9 @@ function Welcome() {
           viewBox='0 0 24 24'
           fill='none'
           stroke='currentColor'
-          stroke-width='2'
-          stroke-linecap='round'
-          stroke-linejoin='round'
+          strokeWidth='2'
+          strokeLinecap='round'
+          strokeLinejoin='round'
           className='size-3 inline-block'
         >
           <rect width='18' height='11' x='3' y='11' rx='2' ry='2' />
