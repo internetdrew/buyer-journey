@@ -49,6 +49,11 @@ function AppNav() {
             <p className='font-medium text-foreground'>
               Not more content. More clarity, trust, and confidence to say yes.
             </p>
+            <p>
+              To make that idea tangible, this demo uses a fictional company,
+              Base Robotics, and follows one operational buying path from
+              question to confidence.
+            </p>
           </div>
         </DialogContent>
       </Dialog>
