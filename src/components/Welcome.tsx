@@ -10,7 +10,7 @@ function Welcome({ onStart }: WelcomeProps) {
       <h1 className='text-xl font-semibold'>
         Start with what you need to understand.
       </h1>
-      <p className='mx-auto mt-2 text-neutral-500'>
+      <p className='mx-auto mt-2 max-w-md text-neutral-500'>
         Choose what matters most, and we'll guide you through how Base Robotics
         could work in your operation.
       </p>

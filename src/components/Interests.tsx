@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 import PerspectiveIllustration from './PerspectiveIllustration';
 import { AnimatedButton, AnimatedButtonGroup } from '@/components/ui/animated-button';
@@ -11,6 +12,12 @@ import {
 } from '@/components/ui/field';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { demoInterest, type Interest } from '../journey';
+
+const SELECTION_MOTION = {
+  hidden: { opacity: 0, filter: 'blur(3px)' },
+  visible: { opacity: 1, filter: 'blur(0px)' },
+  transition: { duration: 0.18, ease: 'easeOut' as const },
+};
 
 const interests: {
   value: Interest;
@@ -59,6 +66,7 @@ export default function Interests({
   onContinue,
 }: InterestsProps) {
   const [illustrationActive, setIllustrationActive] = useState(false);
+  const reduceMotion = useReducedMotion();
   const canContinue = interest === demoInterest;
   const continueLabel = canContinue ? 'Continue with Operations' : 'Continue';
   return (
@@ -88,6 +96,7 @@ export default function Interests({
         >
           {interests.map(({ value, perspective, title, description }) => {
             const disabled = value !== demoInterest;
+            const selectionLabel = disabled ? 'Unavailable' : interest === value ? 'Selected' : 'Select perspective';
             return (
               <FieldLabel
                 key={value}
@@ -132,12 +141,21 @@ export default function Interests({
                     </FieldDescription>
                   </div>
                   <div className='perspective-footer'>
-                    <span aria-hidden='true' className='text-xs font-medium'>
-                      {disabled
-                        ? 'Unavailable'
-                        : interest === value
-                          ? 'Selected'
-                          : 'Select perspective'}
+                    <span aria-hidden='true' className='inline-grid text-xs font-medium'>
+                      {reduceMotion || disabled ? selectionLabel : (
+                        <AnimatePresence initial={false}>
+                          <motion.span
+                            key={selectionLabel}
+                            className='col-start-1 row-start-1 whitespace-nowrap'
+                            initial={SELECTION_MOTION.hidden}
+                            animate={SELECTION_MOTION.visible}
+                            exit={SELECTION_MOTION.hidden}
+                            transition={SELECTION_MOTION.transition}
+                          >
+                            {selectionLabel}
+                          </motion.span>
+                        </AnimatePresence>
+                      )}
                     </span>
                     <RadioGroupItem
                       id={`interest-${value}`}

@@ -4,13 +4,15 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 
 /* Selection storyboard: the action row and buttons resize with one spring.
- * Labels crossfade through a subtle blur while their positions are corrected.
+ * A replacement label drops in from just above the button while the old label
+ * settles out below it. The short travel keeps the interaction responsive.
  */
 const BUTTON_MOTION = {
   layout: { type: 'spring' as const, stiffness: 400, damping: 30 },
-  content: { duration: 0.18, ease: 'easeOut' as const },
-  hidden: { opacity: 0, filter: 'blur(3px)' },
-  visible: { opacity: 1, filter: 'blur(0px)' },
+  content: { type: 'spring' as const, stiffness: 500, damping: 32 },
+  hidden: { opacity: 0, y: -9, filter: 'blur(2px)' },
+  visible: { opacity: 1, y: 0, filter: 'blur(0px)' },
+  exit: { opacity: 0, y: 7, filter: 'blur(2px)' },
   pressedScale: 0.98,
 };
 
@@ -60,7 +62,7 @@ export function AnimatedButton({
             layout='position'
             initial={BUTTON_MOTION.hidden}
             animate={BUTTON_MOTION.visible}
-            exit={BUTTON_MOTION.hidden}
+            exit={BUTTON_MOTION.exit}
             transition={{ ...BUTTON_MOTION.content, layout: BUTTON_MOTION.layout }}
           >
             {content}
