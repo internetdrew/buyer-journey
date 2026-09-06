@@ -66,6 +66,7 @@ function App() {
           <FocusAreas
             focusArea={state.focusArea}
             onSelect={focusArea => send({ type: 'SELECT_FOCUS', focusArea })}
+            onContinue={() => send({ type: 'NEXT' })}
             onBack={() => send({ type: 'BACK' })}
           />
         );
@@ -87,7 +88,11 @@ function App() {
     <div className='px-4'>
       <AppNav />
       <main>
-        <AnimatePresence initial={false} mode='wait'>
+        <AnimatePresence
+          initial={false}
+          mode='wait'
+          onExitComplete={() => window.scrollTo({ top: 0, left: 0, behavior: 'instant' })}
+        >
           <motion.div
             key={state.stage}
             ref={viewRef}

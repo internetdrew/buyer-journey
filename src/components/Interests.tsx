@@ -1,53 +1,39 @@
 import { useState } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 import PerspectiveIllustration from './PerspectiveIllustration';
-import { AnimatedButton, AnimatedButtonGroup } from '@/components/ui/animated-button';
+import RadioCard from './RadioCard';
 import {
-  Field,
-  FieldDescription,
-  FieldLabel,
-  FieldLegend,
-  FieldSet,
-} from '@/components/ui/field';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+  AnimatedButton,
+  AnimatedButtonGroup,
+} from '@/components/ui/animated-button';
+import { FieldLegend, FieldSet } from '@/components/ui/field';
+import { RadioGroup } from '@/components/ui/radio-group';
 import { demoInterest, type Interest } from '../journey';
-
-const SELECTION_MOTION = {
-  hidden: { opacity: 0, filter: 'blur(3px)' },
-  visible: { opacity: 1, filter: 'blur(0px)' },
-  transition: { duration: 0.18, ease: 'easeOut' as const },
-};
 
 const interests: {
   value: Interest;
-  perspective: string;
-  title: [string, string];
+  title: string;
   description: string;
 }[] = [
   {
     value: 'operations',
-    perspective: 'Operations',
-    title: ['Keep the floor', 'running'],
+    title: 'Keeping operations running smoothly',
     description:
       'Explore reliability, uptime, and throughput concerns on the floor.',
   },
   {
     value: 'finance',
-    perspective: 'Finance',
-    title: ['Understand', 'cost & risk'],
+    title: 'Understanding cost and impact',
     description: 'Evaluate ROI, TCO, and financial risk.',
   },
   {
     value: 'technical',
-    perspective: 'Technical',
-    title: ['Check systems', '& integrations'],
+    title: 'Making sure systems connect',
     description: 'Validate compatibility, integrations, and implementation.',
   },
   {
     value: 'executive',
-    perspective: 'Executive',
-    title: ['Align the', 'business'],
+    title: 'Getting everyone aligned',
     description: 'Align strategy, priorities, and organizational impact.',
   },
 ];
@@ -66,22 +52,21 @@ export default function Interests({
   onContinue,
 }: InterestsProps) {
   const [illustrationActive, setIllustrationActive] = useState(false);
-  const reduceMotion = useReducedMotion();
   const canContinue = interest === demoInterest;
   const continueLabel = canContinue ? 'Continue with Operations' : 'Continue';
   return (
     <div className='mx-auto mt-12 max-w-6xl pb-12'>
       <h1 className='text-center text-xl font-semibold tracking-tight text-balance'>
-        What are you here to figure out?
+        Let's start with what matters most.
       </h1>
       <p className='mx-auto mt-3 max-w-xl text-center text-pretty text-muted-foreground'>
-        We'll shape the experience around the questions you're most likely to
-        care about.
+        Choose where you're coming from, and we'll guide you through the
+        questions, details, and considerations most relevant to you.
       </p>
       <FieldSet className='mt-4'>
         <FieldLegend
           id='perspective-legend'
-          className='w-full text-center font-normal text-muted-foreground'
+          className='w-full sr-only text-center font-normal text-muted-foreground'
         >
           Choose the perspective you're coming from.
         </FieldLegend>
@@ -94,79 +79,22 @@ export default function Interests({
           }}
           className='mt-5 grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4'
         >
-          {interests.map(({ value, perspective, title, description }) => {
+          {interests.map(({ value, title, description }) => {
             const disabled = value !== demoInterest;
-            const selectionLabel = disabled ? 'Unavailable' : interest === value ? 'Selected' : 'Select perspective';
             return (
-              <FieldLabel
+              <RadioCard
                 key={value}
-                htmlFor={`interest-${value}`}
-                onMouseEnter={() => {
-                  if (!disabled) setIllustrationActive(true);
-                }}
-                onMouseLeave={() => setIllustrationActive(false)}
-                onFocus={() => {
-                  if (!disabled) setIllustrationActive(true);
-                }}
-                onBlur={() => setIllustrationActive(false)}
-                className={`perspective-card ${disabled ? 'perspective-card-disabled' : 'perspective-card-enabled'}`}
+                value={value}
+                title={title}
+                description={description}
+                disabled={disabled}
+                onActiveChange={setIllustrationActive}
               >
-                <Field className='h-full gap-0'>
-                  <div className='perspective-art'>
-                    <span
-                      id={`interest-${value}-perspective`}
-                      className='perspective-category'
-                    >
-                      {perspective}
-                    </span>
-                    <PerspectiveIllustration
-                      perspective={value}
-                      active={!disabled && illustrationActive}
-                    />
-                  </div>
-                  <div className='perspective-copy'>
-                    <span
-                      id={`interest-${value}-title`}
-                      className='block min-h-14 text-xl leading-7 font-medium tracking-tight text-balance'
-                    >
-                      {title[0]}
-                      <br />
-                      {title[1]}
-                    </span>
-                    <FieldDescription
-                      id={`interest-${value}-description`}
-                      className='mt-4! text-sm leading-relaxed'
-                    >
-                      {description}
-                    </FieldDescription>
-                  </div>
-                  <div className='perspective-footer'>
-                    <span aria-hidden='true' className='inline-grid text-xs font-medium'>
-                      {reduceMotion || disabled ? selectionLabel : (
-                        <AnimatePresence initial={false}>
-                          <motion.span
-                            key={selectionLabel}
-                            className='col-start-1 row-start-1 whitespace-nowrap'
-                            initial={SELECTION_MOTION.hidden}
-                            animate={SELECTION_MOTION.visible}
-                            exit={SELECTION_MOTION.hidden}
-                            transition={SELECTION_MOTION.transition}
-                          >
-                            {selectionLabel}
-                          </motion.span>
-                        </AnimatePresence>
-                      )}
-                    </span>
-                    <RadioGroupItem
-                      id={`interest-${value}`}
-                      value={value}
-                      disabled={disabled}
-                      aria-labelledby={`interest-${value}-title interest-${value}-perspective`}
-                      aria-describedby={`interest-${value}-description`}
-                    />
-                  </div>
-                </Field>
-              </FieldLabel>
+                <PerspectiveIllustration
+                  perspective={value}
+                  active={!disabled && illustrationActive}
+                />
+              </RadioCard>
             );
           })}
         </RadioGroup>

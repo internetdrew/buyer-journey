@@ -64,6 +64,9 @@ export function journeyReducer(
       }
       return state;
     case 'focus':
+      if (event.type === 'NEXT' && state.focusArea === demoFocusArea) {
+        return { ...state, stage: 'deployment' };
+      }
       if (event.type === 'BACK') {
         return {
           ...state,
@@ -73,7 +76,7 @@ export function journeyReducer(
         };
       }
       if (event.type === 'SELECT_FOCUS' && event.focusArea === demoFocusArea) {
-        return { ...state, stage: 'deployment', focusArea: event.focusArea };
+        return { ...state, focusArea: event.focusArea };
       }
       return state;
     case 'deployment':
