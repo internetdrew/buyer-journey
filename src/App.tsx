@@ -85,7 +85,7 @@ function App() {
   }
 
   return (
-    <div className='px-4'>
+    <div className='px-4 pt-16'>
       <AppNav />
       <main>
         <AnimatePresence
