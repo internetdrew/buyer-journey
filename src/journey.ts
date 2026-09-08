@@ -20,7 +20,7 @@ export type JourneyState = {
     | 'deployment'
     | 'rollout'
     | 'timeline'
-    | 'peer-insight'
+    | 'implementation-insight'
     | 'summary'
     | 'complete';
   interest: Interest | null;
@@ -65,7 +65,7 @@ export function journeyReducer(
       return state;
     case 'focus':
       if (event.type === 'NEXT' && state.focusArea === demoFocusArea) {
-        return { ...state, stage: 'deployment' };
+        return { ...state, stage: 'rollout' };
       }
       if (event.type === 'BACK') {
         return {
@@ -92,24 +92,26 @@ export function journeyReducer(
       return state;
     case 'rollout':
       if (event.type === 'NEXT' && state.shiftPattern !== null) {
-        return { ...state, stage: 'timeline' };
+        return { ...state, stage: 'implementation-insight' };
       }
-      if (event.type === 'BACK') return { ...state, stage: 'deployment' };
+      if (event.type === 'BACK') return { ...state, stage: 'focus' };
       if (event.type === 'SELECT_SHIFTS') {
         return { ...state, shiftPattern: event.shiftPattern };
       }
       return state;
     case 'timeline':
-      if (event.type === 'NEXT') return { ...state, stage: 'peer-insight' };
-      if (event.type === 'BACK') return { ...state, stage: 'rollout' };
+      if (event.type === 'NEXT' && state.shiftPattern !== null)
+        return { ...state, stage: 'summary' };
+      if (event.type === 'BACK')
+        return { ...state, stage: state.shiftPattern ? 'implementation-insight' : 'rollout' };
       return state;
-    case 'peer-insight':
-      if (event.type === 'NEXT') return { ...state, stage: 'summary' };
-      if (event.type === 'BACK') return { ...state, stage: 'timeline' };
+    case 'implementation-insight':
+      if (event.type === 'NEXT') return { ...state, stage: 'timeline' };
+      if (event.type === 'BACK') return { ...state, stage: 'rollout' };
       return state;
     case 'summary':
       if (event.type === 'NEXT') return { ...state, stage: 'complete' };
-      if (event.type === 'BACK') return { ...state, stage: 'peer-insight' };
+      if (event.type === 'BACK') return { ...state, stage: 'timeline' };
       return state;
     case 'complete':
       if (event.type === 'BACK') return { ...state, stage: 'summary' };

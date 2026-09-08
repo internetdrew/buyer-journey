@@ -11,7 +11,7 @@ import {
 
 function AppNav() {
   return (
-    <nav className='flex items-center justify-between py-4'>
+    <nav className='fixed inset-x-0 top-0 z-40 flex h-16 items-center justify-between bg-background px-4'>
       <span className='text-lg font-semibold'>Base Robotics</span>
       <Dialog>
         <DialogTrigger

@@ -6,7 +6,7 @@ import FocusAreas from './components/FocusAreas';
 import Deployment from './components/Deployment';
 import Rollout from './components/Rollout';
 import RolloutTimeline from './components/RolloutTimeline';
-import PeerInsight from './components/PeerInsight';
+import ImplementationInsight from './components/ImplementationInsight';
 import JourneySummary from './components/JourneySummary';
 import JourneyComplete from './components/JourneyComplete';
 import Welcome from './components/Welcome';
@@ -29,9 +29,9 @@ function App() {
         );
       case 'complete':
         return <JourneyComplete onBack={() => send({ type: 'BACK' })} />;
-      case 'peer-insight':
+      case 'implementation-insight':
         return (
-          <PeerInsight
+          <ImplementationInsight
             onBack={() => send({ type: 'BACK' })}
             onContinue={() => send({ type: 'NEXT' })}
           />
@@ -39,6 +39,8 @@ function App() {
       case 'timeline':
         return (
           <RolloutTimeline
+            key={state.shiftPattern}
+            shiftPattern={state.shiftPattern}
             onBack={() => send({ type: 'BACK' })}
             onContinue={() => send({ type: 'NEXT' })}
           />
@@ -85,13 +87,15 @@ function App() {
   }
 
   return (
-    <div className='px-4'>
+    <div className='px-4 pt-16'>
       <AppNav />
       <main>
         <AnimatePresence
           initial={false}
           mode='wait'
-          onExitComplete={() => window.scrollTo({ top: 0, left: 0, behavior: 'instant' })}
+          onExitComplete={() =>
+            window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+          }
         >
           <motion.div
             key={state.stage}
