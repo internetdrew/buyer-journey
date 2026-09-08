@@ -2,13 +2,33 @@ import {
   ArrowRight,
   Blocks,
   Bookmark,
+  Calendar,
   Clock,
   Flag,
+  Layers,
+  Lightbulb,
   NotebookPen,
+  Target,
+  Workflow,
   Users,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import type { ShiftPattern } from '../journey';
+import { shifts } from '../rollout-data';
+
+const approaches: Record<ShiftPattern, string> = {
+  one: 'Pilot in a low-impact window, then validate with the team.',
+  two: 'Pilot on one shift, then validate across both shifts.',
+  continuous:
+    'Pilot in a controlled zone, validate across all shifts, then go live in stages.',
+};
+
+const implementationInsights: Record<ShiftPattern, string> = {
+  one: 'The biggest advantage of a single-shift operation is the room it creates for setup and testing outside production hours.',
+  two: 'The handoff between shifts is often where differences in workflow surface, so validation needs to include both teams.',
+  continuous:
+    'Continuous operations leave no natural deployment window, so rollout works best when it’s broken into smaller, controlled moments.',
+};
 
 const shiftDescriptions: Record<ShiftPattern, string> = {
   one: 'Use off-hours for setup and testing, with validation built around the operating day.',
@@ -60,6 +80,36 @@ export default function JourneySummary({
   const shiftDescription = shiftPattern
     ? shiftDescriptions[shiftPattern]
     : 'Align rollout with your shift pattern and operator availability.';
+  const selectedShift = shifts.find(shift => shift.value === shiftPattern);
+  const notebookEntries = [
+    { icon: Target, title: 'Priority', context: 'Minimize downtime' },
+    {
+      icon: Layers,
+      title: 'Operating Pattern',
+      context: selectedShift?.label ?? 'Choose your shift pattern',
+    },
+    {
+      icon: Calendar,
+      title: 'Rollout Range',
+      context: selectedShift
+        ? `${selectedShift.estimate[0]} – ${selectedShift.estimate[1]} weeks`
+        : 'Choose your shift pattern to see your range',
+    },
+    {
+      icon: Workflow,
+      title: 'Approach',
+      context: shiftPattern
+        ? approaches[shiftPattern]
+        : 'Assess, pilot, then scale.',
+    },
+    {
+      icon: Lightbulb,
+      title: 'Implementation Insight',
+      context: shiftPattern
+        ? implementationInsights[shiftPattern]
+        : 'Start contained, validate, then expand.',
+    },
+  ];
   return (
     <div className='mx-auto mt-10 max-w-6xl pb-8 sm:mt-12 sm:pb-10'>
       <div className='grid items-start gap-12 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]'>
@@ -145,15 +195,21 @@ export default function JourneySummary({
           <p className='mt-1 text-sm text-neutral-600'>
             Your saved insights from this journey.
           </p>
-          <ul className='mt-6 space-y-6 font-medium ring-[0.5px] ring-neutral-200 rounded-md bg-white p-4 text-neutral-600'>
-            {[
-              'Operations priority: Minimize downtime',
-              'Deployment approach: Assess, pilot, then scale',
-              'Peer insight: Prepare people alongside the technology',
-            ].map(insight => (
-              <li key={insight} className='rounded-md text-sm'>
-                <div className='flex items-center justify-between gap-3'>
-                  <span>{insight}</span>
+          <ul className='mt-6 space-y-3'>
+            {notebookEntries.map(({ icon: Icon, title, context }) => (
+              <li key={title} className='rounded-xl bg-white p-2'>
+                <div className='flex items-center gap-3'>
+                  <span className='flex size-8 shrink-0 items-center justify-center rounded-full bg-neutral-50 text-[#60734f]'>
+                    <Icon
+                      aria-hidden='true'
+                      className='size-4'
+                      strokeWidth={1.8}
+                    />
+                  </span>
+                  <div className='min-w-0 text-xs flex-1'>
+                    <p className='font-medium'>{title}</p>
+                    <p className='mt-1.5 text-neutral-600'>{context}</p>
+                  </div>
                   <Bookmark
                     aria-hidden='true'
                     className='size-4 shrink-0 text-neutral-400'
