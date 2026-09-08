@@ -135,7 +135,7 @@ export default function ImplementationInsight({
           Back
         </Button>
         <Button onClick={onContinue}>
-          Continue to next step
+          Explore your rollout timeline
           <ArrowRight aria-hidden='true' className='size-4' />
         </Button>
       </nav>

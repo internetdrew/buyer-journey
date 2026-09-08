@@ -100,18 +100,18 @@ export function journeyReducer(
       }
       return state;
     case 'timeline':
-      if (event.type === 'NEXT')
-        return { ...state, stage: 'implementation-insight' };
-      if (event.type === 'BACK') return { ...state, stage: 'rollout' };
+      if (event.type === 'NEXT' && state.shiftPattern !== null)
+        return { ...state, stage: 'summary' };
+      if (event.type === 'BACK')
+        return { ...state, stage: state.shiftPattern ? 'implementation-insight' : 'rollout' };
       return state;
     case 'implementation-insight':
-      if (event.type === 'NEXT') return { ...state, stage: 'summary' };
+      if (event.type === 'NEXT') return { ...state, stage: 'timeline' };
       if (event.type === 'BACK') return { ...state, stage: 'rollout' };
       return state;
     case 'summary':
       if (event.type === 'NEXT') return { ...state, stage: 'complete' };
-      if (event.type === 'BACK')
-        return { ...state, stage: 'implementation-insight' };
+      if (event.type === 'BACK') return { ...state, stage: 'timeline' };
       return state;
     case 'complete':
       if (event.type === 'BACK') return { ...state, stage: 'summary' };

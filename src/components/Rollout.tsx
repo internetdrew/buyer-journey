@@ -8,55 +8,7 @@ import { AnimateNumber } from 'motion-plus/react';
 
 import type { ShiftPattern } from '../journey';
 
-// Illustrative planning ranges; replace with approved rollout benchmarks.
-const shifts: {
-  value: ShiftPattern;
-  label: string;
-  estimate: [number, number];
-  phases: string[];
-  context: string;
-}[] = [
-  {
-    value: 'one',
-    label: '1 shift',
-    estimate: [2, 3],
-    phases: [
-      'Assess & plan',
-      'Pilot during a low-impact window',
-      'Validate with the full team',
-      'Go live & optimize',
-    ],
-    context:
-      'With one shift, we have more room outside operating hours to set up, test, and train without disrupting the day.',
-  },
-  {
-    value: 'two',
-    label: '2 shifts',
-    estimate: [3, 4],
-    phases: [
-      'Assess & plan',
-      'Pilot on one shift',
-      'Validate across both shifts',
-      'Go live & optimize',
-    ],
-    context:
-      "With two shifts, we'd usually prove the workflow with one team first, then validate it across the second before going live.",
-  },
-  {
-    value: 'continuous',
-    label: '24/7',
-    estimate: [4, 6],
-    phases: [
-      'Map rollout windows',
-      'Pilot in a controlled zone',
-      'Validate across all shifts',
-      'Stage go-live',
-      'Optimize & expand',
-    ],
-    context:
-      'For continuous operations, we break rollout into smaller windows so every shift can validate the system without asking the operation to stop.',
-  },
-];
+import { shifts } from '../rollout-data';
 
 type RolloutProps = {
   shiftPattern: ShiftPattern | null;

@@ -39,6 +39,8 @@ function App() {
       case 'timeline':
         return (
           <RolloutTimeline
+            key={state.shiftPattern}
+            shiftPattern={state.shiftPattern}
             onBack={() => send({ type: 'BACK' })}
             onContinue={() => send({ type: 'NEXT' })}
           />

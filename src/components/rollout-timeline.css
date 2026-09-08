@@ -1,0 +1,117 @@
+.rollout-timeline {
+  display: grid;
+  gap: 12px;
+}
+
+.rollout-timeline-trigger {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.rollout-timeline-trigger:focus-visible {
+  outline: none;
+}
+
+.rollout-timeline-trigger:focus-visible .rollout-timeline-number::after {
+  opacity: 1;
+}
+
+.rollout-timeline-number {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #d4d4d4;
+  border-radius: 50%;
+  background: white;
+  color: #737373;
+}
+
+/* Hover and keyboard focus stay local to the week circle. */
+.rollout-timeline-number::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border: 2px solid #647650;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
+
+.rollout-timeline-trigger[aria-expanded='true'] .rollout-timeline-number {
+  background: #647650;
+  border-color: #647650;
+  color: white;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .rollout-timeline-trigger:hover .rollout-timeline-number::after {
+    opacity: 1;
+  }
+}
+
+.rollout-timeline-trigger:focus-visible .rollout-timeline-number::after {
+  transition: none;
+}
+
+.rollout-timeline-details {
+  margin-top: 12px;
+  min-width: 0;
+}
+
+@media (min-width: 64rem) {
+  .rollout-timeline {
+    grid-template-columns: repeat(var(--week-count), minmax(0, 1fr));
+    gap: 16px 0;
+  }
+
+  .rollout-timeline-week {
+    display: contents;
+  }
+
+  .rollout-timeline-trigger {
+    position: relative;
+    grid-row: 1;
+    flex-direction: column;
+    align-self: start;
+    text-align: center;
+  }
+
+  .rollout-timeline-week:not(:last-child) .rollout-timeline-trigger::after {
+    content: '';
+    position: absolute;
+    top: 30px;
+    left: calc(50% + 30px);
+    width: calc(100% - 60px);
+    height: 1px;
+    background: #d4d4d4;
+    pointer-events: none;
+  }
+
+  .rollout-timeline-details {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin-top: 0;
+  }
+}
+
+@media (min-width: 64rem) {
+  .timeline-week-content {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rollout-timeline-number::after {
+    transition: none;
+  }
+}
