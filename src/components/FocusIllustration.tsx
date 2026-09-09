@@ -9,7 +9,8 @@ const LIME = '#d5f69a';
 /* ANIMATION STORYBOARD
  *    rest   needle sits in the right-hand red / high-downtime zone
  *  hover   needle decreases counterclockwise into the left-hand green zone
- *  leave   needle returns with the same interruptible spring
+ *  leave   needle returns with the same interruptible spring unless selected
+ * select   needle stays at its final position in the green zone
  */
 
 // angle: degrees, 0 = straight up, positive = clockwise (matches METER.restRotation/improvedRotation)
@@ -40,7 +41,7 @@ const METER = {
   spring: { type: 'spring' as const, stiffness: 400, damping: 36, mass: 0.8 },
 };
 
-function Meter({ active }: { active: boolean }) {
+function Meter({ active, selected }: { active: boolean; selected: boolean }) {
   const reducedMotion = useReducedMotion();
   return (
     <svg
@@ -75,14 +76,14 @@ function Meter({ active }: { active: boolean }) {
       />
       <g transform={`translate(${CENTER.x} ${CENTER.y})`}>
         <motion.g
-          initial={{ rotate: METER.restRotation }}
+          initial={{ rotate: selected ? METER.improvedRotation : METER.restRotation }}
           animate={{
             rotate:
-              active && !reducedMotion
+              selected || (active && !reducedMotion)
                 ? METER.improvedRotation
                 : METER.restRotation,
           }}
-          transition={METER.spring}
+          transition={reducedMotion ? { duration: 0 } : METER.spring}
           style={{ transformBox: 'view-box', originX: 0, originY: 0 }}
         >
           <path d='M0 0V-49' stroke='#34353c' strokeWidth='3' />
@@ -241,11 +242,13 @@ function Team() {
 export default function FocusIllustration({
   focusArea,
   active,
+  selected = false,
 }: {
   focusArea: FocusArea;
   active: boolean;
+  selected?: boolean;
 }) {
-  if (focusArea === 'downtime') return <Meter active={active} />;
+  if (focusArea === 'downtime') return <Meter active={active} selected={selected} />;
   if (focusArea === 'throughput') return <Throughput />;
   if (focusArea === 'roi') return <DollarBill />;
   if (focusArea === 'integrations') return <Integrations />;

@@ -224,7 +224,7 @@ export default function JourneyComplete({
         </main>
         <aside
           aria-labelledby='team-heading'
-          className='min-w-0 rounded-[24px] bg-neutral-50 p-4 ring-[0.5px] ring-neutral-300'
+          className='min-w-0 rounded-[24px] bg-neutral-50 p-4 ring-[0.5px] ring-neutral-300 lg:sticky lg:top-24 lg:max-h-[calc(100dvh-7rem)] lg:overflow-y-auto'
         >
           <div className='flex items-center gap-2'>
             <Users aria-hidden='true' className='size-4 text-[#60734f]' />

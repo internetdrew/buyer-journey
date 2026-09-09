@@ -82,7 +82,11 @@ export default function FocusAreas({
                 disabled={disabled}
                 onActiveChange={active => setActiveArea(active ? value : null)}
               >
-                <FocusIllustration focusArea={value} active={activeArea === value} />
+                <FocusIllustration
+                  focusArea={value}
+                  active={activeArea === value}
+                  selected={focusArea === value}
+                />
               </RadioCard>
             );
           })}
