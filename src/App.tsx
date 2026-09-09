@@ -28,7 +28,7 @@ function App() {
           />
         );
       case 'complete':
-        return <JourneyComplete onBack={() => send({ type: 'BACK' })} />;
+        return <JourneyComplete shiftPattern={state.shiftPattern} onBack={() => send({ type: 'BACK' })} />;
       case 'implementation-insight':
         return (
           <ImplementationInsight

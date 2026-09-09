@@ -12,7 +12,11 @@ type RolloutTimelineProps = {
   onContinue: () => void;
 };
 
-export default function RolloutTimeline({ shiftPattern, onBack, onContinue }: RolloutTimelineProps) {
+export default function RolloutTimeline({
+  shiftPattern,
+  onBack,
+  onContinue,
+}: RolloutTimelineProps) {
   const [selectedWeek, setSelectedWeek] = useState(0);
   const [animateDetails, setAnimateDetails] = useState(false);
   const id = useId();
@@ -21,8 +25,13 @@ export default function RolloutTimeline({ shiftPattern, onBack, onContinue }: Ro
     return (
       <section className='mx-auto mt-12 max-w-6xl pb-10'>
         <h1 className='text-xl font-semibold'>Choose your operating pattern</h1>
-        <p className='mt-2 text-sm text-neutral-600'>Select your shifts to explore a rollout timeline tailored to your operation.</p>
-        <Button onClick={onBack} className='mt-6'>Choose operating pattern</Button>
+        <p className='mt-2 text-sm text-neutral-600'>
+          Select your shifts to explore a rollout timeline tailored to your
+          operation.
+        </p>
+        <Button onClick={onBack} className='mt-6'>
+          Choose operating pattern
+        </Button>
       </section>
     );
   }
@@ -33,16 +42,22 @@ export default function RolloutTimeline({ shiftPattern, onBack, onContinue }: Ro
   return (
     <div className='mx-auto mt-12 max-w-6xl pb-10'>
       <header>
-        <h1 className='text-xl font-semibold tracking-tight'>Your rollout timeline</h1>
+        <h1 className='text-xl font-semibold tracking-tight'>
+          Your rollout timeline
+        </h1>
         <p className='mt-2 text-sm text-neutral-600'>
-          {shift.label} · Typically {shift.estimate[0]}–{shift.estimate[1]} weeks
+          {shift.label} · Typically {shift.estimate[0]}–{shift.estimate[1]}{' '}
+          weeks
         </p>
         <p className='mt-2 max-w-2xl text-sm text-neutral-600'>
           {shift.timelineContext}
         </p>
       </header>
 
-      <p className='mt-4 text-xs text-neutral-500'>Select any week · Illustrative {weeks.length}-week plan, paced by readiness.</p>
+      <p className='mt-4 text-xs text-neutral-500'>
+        Select any week · Illustrative {weeks.length}-week plan, paced by
+        readiness.
+      </p>
       <ol
         className='rollout-timeline my-4'
         style={{ '--week-count': weeks.length } as CSSProperties}
@@ -65,8 +80,12 @@ export default function RolloutTimeline({ shiftPattern, onBack, onContinue }: Ro
                 {index + 1}
               </span>
               <span>
-                <span className='block text-xs font-medium uppercase tracking-wide text-neutral-500'>Week {index + 1}</span>
-                <span className='mt-1 block text-sm font-medium'>{week.title}</span>
+                <span className='block text-xs font-medium uppercase tracking-wide text-neutral-500'>
+                  Week {index + 1}
+                </span>
+                <span className='mt-1 block text-sm font-medium'>
+                  {week.title}
+                </span>
               </span>
             </button>
             {selectedWeek === index && (
@@ -75,13 +94,22 @@ export default function RolloutTimeline({ shiftPattern, onBack, onContinue }: Ro
                 aria-labelledby={`${id}-heading`}
                 className='rollout-timeline-details rounded-xl border p-4 sm:p-6'
               >
-                <TimelineWeekDetails animateChanges={animateDetails} week={week} previousZones={weeks[index - 1]?.activeZones ?? []} number={index + 1} headingId={`${id}-heading`} />
+                <TimelineWeekDetails
+                  animateChanges={animateDetails}
+                  week={week}
+                  previousZones={weeks[index - 1]?.activeZones ?? []}
+                  number={index + 1}
+                  headingId={`${id}-heading`}
+                />
               </section>
             )}
           </li>
         ))}
       </ol>
-      <nav aria-label='Journey navigation' className='mt-6 flex flex-wrap items-center justify-between gap-3 border-t pt-6'>
+      <nav
+        aria-label='Journey navigation'
+        className='mt-6 flex flex-wrap items-center justify-between'
+      >
         <Button variant='ghost' onClick={onBack} className='min-h-11'>
           <ArrowLeft aria-hidden='true' />
           Back
