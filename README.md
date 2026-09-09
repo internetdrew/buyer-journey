@@ -1,79 +1,78 @@
-# React + TypeScript + Vite
+# Base Robotics — A Guided B2B Buying Experience
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+B2B buying is rarely a single-person decision.
 
-Currently, two official plugins are available:
+Operations wants to know whether implementation will disrupt the business. Finance wants confidence in the economics. Technical teams need to understand compatibility and risk. Leadership needs to believe the investment makes sense.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+For a deal to move forward, all of those people eventually need enough clarity and confidence to say yes.
 
-## React Compiler
+## The challenge
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+Buyers increasingly want to learn as much as they can before talking to sales.
 
-Note: This will impact Vite dev & build performances.
-You can also try [the experimental native React Compiler support in plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md#rust-react-compiler) by using `compiler: true` in the plugin options instead of using the Babel plugin.
+The problem is that the information that actually builds confidence often doesn't live on the website.
 
-## Expanding the ESLint configuration
+It lives with implementation teams, engineers, operators, customer success teams, product leaders, and other subject-matter experts who understand what happens when the product meets the real world.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Companies try to bridge that gap with more content:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- blog posts
+- ebooks
+- webinars
+- case studies
+- sales collateral
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+But more content doesn't necessarily make a complicated decision easier to understand.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+It still leaves the buyer responsible for finding the right information, determining what applies to their situation, and carrying that understanding back to the rest of the buying committee.
 
-```
+Meanwhile, asking subject-matter experts to constantly create marketing content is difficult to scale, and companies may not want their most useful operational knowledge published openly on the web.
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+## The idea
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+What if a serious buyer could be invited into an experience designed around the decision they're trying to make?
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Instead of navigating a library of content, they could tell the system:
 
-```
-# buyer-journey
+- what perspective they're coming from
+- what they're trying to understand
+- how their operation works
+- what concerns them most
+
+The experience could then bring the right expertise forward in context.
+
+Not as another form to complete, but as something to explore.
+
+## The prototype
+
+This proof of concept uses a fictional company, **Base Robotics**, and follows an Operations buyer evaluating a robotics rollout.
+
+The buyer begins with a concern: minimizing downtime.
+
+As they move through the experience, their choices shape what they see. Their operating pattern changes the rollout recommendation. Implementation guidance appears when it becomes relevant. Multimedia helps explain the thinking behind the recommendation.
+
+Instead of ending with a generic “Contact Sales” button, the experience leaves the buyer with a structured evaluation they can bring to the rest of their team.
+
+Other stakeholders can then join the same decision with shared context while exploring the questions that matter to their own role.
+
+## Why AI matters here
+
+AI has made it dramatically easier for companies to produce more content.
+
+I think the more interesting opportunity is to use it to create **deeper experiences around the expertise a company already has.**
+
+Insights from subject-matter experts can become contextual briefings, explanations, recommendations, audio, video, and other interactive guidance without requiring those experts to personally produce every piece of the experience.
+
+The goal isn't to generate more material for buyers to consume.
+
+It's to make the company's knowledge easier to access at the exact moment it becomes useful.
+
+## The larger idea
+
+The buying journey isn't linear, and serious buyers don't all need the same information.
+
+A better experience can meet people where they are, help them understand what matters to them, and make that understanding easier to carry across the buying committee.
+
+**Less content to navigate.  
+More clarity to build.  
+More confidence to say yes.**
